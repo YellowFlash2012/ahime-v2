@@ -2,7 +2,7 @@ import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Rating from "./Rating";
 
-const Product = ({product}) => {
+const Products = ({product}) => {
     return (
         <Card className="my-3 py-3 rounded">
             <Link to={`/products/${product._id}`}>
@@ -28,4 +28,4 @@ const Product = ({product}) => {
         </Card>
     );
 };
-export default Product;
+export default Products;
