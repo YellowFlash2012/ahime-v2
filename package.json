@@ -7,7 +7,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "npm start --prefix client",
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+    "data:import":"node seeders.js",
+    "data:destroy":"node seeders.js -d"
   },
   "repository": {
     "type": "git",
