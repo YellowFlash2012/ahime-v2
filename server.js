@@ -2,18 +2,18 @@ import express from "express"
 import { config } from "dotenv"
 
 import connectDB from "./config/db.js";
-import Product from "./models/Product.js";
+
+import productsRoutes from "./routes/v1/products.js";
 
 config()
 
 connectDB()
 
 const app = express();
+app.use(express.json())
 const port = process.env.PORT || 5000;
 
-app.get("/api/products", async (req, res) => {
-    const products = await Product.find();
-    res.json(products);
-})
+// routes
+app.use("/api/v1/products", productsRoutes);
 
 app.listen(port, () => { console.log(`Server running on port ${port}`) });
