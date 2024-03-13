@@ -1,4 +1,6 @@
-import { Col, Row } from "react-bootstrap";
+import { Col, Row} from "react-bootstrap";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
 import Products from "../components/Products";
 import { useGetAllProductsQuery } from "../features/productSlice";
 // import products from "../products";
@@ -13,9 +15,11 @@ const Home = () => {
     return (
         <>
             {isLoading ? (
-                <h2>Loading...</h2>
+                <Loader/>
             ) : error ? (
-                <h2>{error?.data?.message||error.error}</h2>
+                <Message variant="danger">
+                    {error?.data?.message || error.error}
+                </Message>
             ) : (
                 <>
                     <h1>Latest Products</h1>
