@@ -13,6 +13,7 @@ import Home from './pages/Home';
 import "./assets/styles/bootstrap.custom.css"
 import './assets/styles/index.css';
 import SingleProduct from './pages/SingleProduct';
+import Cart from './pages/Cart';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -22,7 +23,9 @@ const router = createBrowserRouter(
     <Route path="/" element={<App />}>
       <Route index={true} path="/" element={<Home />} />
       
-      <Route path="/products/:id" element={<SingleProduct />}/>
+      <Route path="/products/:id" element={<SingleProduct />} />
+      
+      <Route path="/cart" element={<Cart />}/>
     </Route>
   )
 )
