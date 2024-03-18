@@ -14,7 +14,11 @@ config()
 connectDB()
 
 const app = express();
+
+// body parser middleware
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
+
 const port = process.env.PORT || 5000;
 
 // routes

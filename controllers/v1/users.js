@@ -1,14 +1,35 @@
 import asyncHandler from "../../middleware/asyncHandler.js";
+import User from "../../models/User.js";
 
 // @desc    Log users in
 // @route   POST /api/v1/users/login
 // @access  Public
 export const logUserIn = asyncHandler(async (req, res) => {
-    
-    res.status(200).json({
-        message: "login user success",
+
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+
+    console.log(email);
+
+    if (user && (await user.matchPw(password))) {
         
-    });
+        res.status(200).json({
+            message: "login user success",
+            data: {
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                isAdmin:user.isAdmin
+            }
+            
+        });
+        
+    } else {
+        res.status(401)
+        throw new Error("Invalid credentials")
+    }
+    
 });
 
 // @desc    Register users
@@ -61,9 +82,11 @@ export const updateUserProfile = asyncHandler(async (req, res) => {
 // @route   GET /api/v1/users
 // @access  Private/Admin
 export const getAllUsersByAdmin = asyncHandler(async (req, res) => {
-    
+    const users = await User.find({});
+
     res.status(200).json({
         message: "get all users success",
+        data:users
         
     });
 });
