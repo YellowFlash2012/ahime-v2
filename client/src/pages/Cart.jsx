@@ -4,7 +4,7 @@ import { FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Message from "../components/Message";
-import { addToCart } from "../features/cartSlice";
+import { addToCart, removeFromCart } from "../features/cartSlice";
 
 const Cart = () => {
     const [qty, setQty] = useState(1);
@@ -17,6 +17,14 @@ const Cart = () => {
 
     const updateCartHandler = async(product,qty) => {
         dispatch(addToCart({ ...product, qty }));
+    }
+
+    const removeFromCartHandler = async (id) => {
+        dispatch(removeFromCart(id))
+    }
+
+    const moveToCheckoutHandler = () => {
+        navigate("/login?redirect=/shipping")
     }
 
     return (
@@ -55,7 +63,10 @@ const Cart = () => {
                                             as="select"
                                             value={item.qty}
                                             onChange={(e) =>
-                                                updateCartHandler(item, Number(e.target.value))
+                                                updateCartHandler(
+                                                    item,
+                                                    Number(e.target.value)
+                                                )
                                             }
                                         >
                                             {[
@@ -74,7 +85,13 @@ const Cart = () => {
                                     </Col>
 
                                     <Col md={2}>
-                                        <Button type="button" variant="danger">
+                                        <Button
+                                            type="button"
+                                            variant="danger"
+                                            onClick={() =>
+                                                removeFromCartHandler(item._id)
+                                            }
+                                        >
                                             <FaTrash />
                                         </Button>
                                     </Col>
@@ -100,14 +117,21 @@ const Cart = () => {
                                     )
                                 </strong>{" "}
                                 items
-
                             </h2>
-
-                            ${cartItems.reduce((acc,item)=>acc+item.qty*item.price,0)}
+                            $
+                            {cartItems.reduce(
+                                (acc, item) => acc + item.qty * item.price,
+                                0
+                            )}
                         </ListGroup.Item>
 
                         <ListGroup.Item>
-                            <Button type="button" className="btn- btn-block" disabled={cartItems.length === 0}>
+                            <Button
+                                type="button"
+                                className="btn- btn-block"
+                                disabled={cartItems.length === 0}
+                                onClick={moveToCheckoutHandler}
+                            >
                                 Proceed To Checkout
                             </Button>
                         </ListGroup.Item>

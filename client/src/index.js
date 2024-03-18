@@ -7,13 +7,17 @@ import { Provider } from 'react-redux';
 import { store } from './app/store';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+
+// components and pages imports
 import Home from './pages/Home';
+import SingleProduct from './pages/SingleProduct';
+import Cart from './pages/Cart';
+import Shipping from './pages/Shipping';
+import Login from './pages/Login';
 
 // import "bootstrap/dist/css/bootstrap.min.css"
 import "./assets/styles/bootstrap.custom.css"
 import './assets/styles/index.css';
-import SingleProduct from './pages/SingleProduct';
-import Cart from './pages/Cart';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -25,7 +29,11 @@ const router = createBrowserRouter(
       
       <Route path="/products/:id" element={<SingleProduct />} />
       
-      <Route path="/cart" element={<Cart />}/>
+      <Route path="/cart" element={<Cart />} />
+      
+      <Route path="/shipping" element={<Shipping />}/>
+      
+      <Route path="/login" element={<Login />} />
     </Route>
   )
 )
