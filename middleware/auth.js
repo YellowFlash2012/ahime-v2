@@ -9,11 +9,15 @@ export const protect = asyncHandler(async (req, res, next) => {
     // read token from cookies
     token = req.cookies.jwt;
 
+    // console.log(token);
+
     if (token) {
         try {
-            const decoded = jwt.verify(token, process.env.env.JWT_SECRET);
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            // console.log(decoded);
 
             req.user = await User.findById(decoded.id).select("-password");
+            // console.log(req.user);
 
             next()
         } catch (error) {

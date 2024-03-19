@@ -8,7 +8,7 @@ router.route("/").post(registerUser).get(protect, admin, getAllUsersByAdmin)
 
 router.post("/login", logUserIn)
 
-router.post("/logout", logoutUser)
+router.post("/logout",protect, logoutUser)
 
 router.route("/profile").get(protect, getUserProfile).put(protect, updateUserProfile)
 

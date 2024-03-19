@@ -27,7 +27,7 @@ export const logUserIn = asyncHandler(async (req, res) => {
         })
 
         res.status(200).json({
-            message: "login user success",
+            message: `Welcome back, ${user.name}`,
             data: {
                 _id: user._id,
                 name: user.name,
@@ -59,9 +59,19 @@ export const registerUser = asyncHandler(async (req, res) => {
 // @route   POST /api/v1/users/logout
 // @access  Private
 export const logoutUser = asyncHandler(async (req, res) => {
+    // console.log(req.user);
+
+    const user = await User.findById(req.user._id);
+
+    res.clearCookie("jwt");
+
+    // res.cookie("jwt", "", {
+    //     httpOnly: true,
+    //     expires:new Date(0)
+    // })
     
     res.status(200).json({
-        message: "logout user success",
+        message: `See you next time, ${user.name}`,
         
     });
 });
