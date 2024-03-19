@@ -34,6 +34,17 @@ userSchema.methods.matchPw=async function (enteredPw) {
     return await bcrypt.compare(enteredPw, this.password)
 }
 
+// hash pw before saving new user
+userSchema.pre("save", async function (next) {
+    if (!this.isModified("password")) {
+        next()
+    }
+
+    const salt = await bcrypt.genSalt(10);
+
+    this.password = await bcrypt.hash(this.password, salt);
+})
+
 const User = mongoose.model("User", userSchema);
 
 export default User;
