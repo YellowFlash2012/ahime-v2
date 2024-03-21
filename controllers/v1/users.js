@@ -96,11 +96,25 @@ export const logoutUser = asyncHandler(async (req, res) => {
 // @route   GET /api/v1/users/profile
 // @access  Private
 export const getUserProfile = asyncHandler(async (req, res) => {
+
+    const user = await User.findById(req.user._id);
+
+    if (user) {
+        res.status(200).json({
+            message: `Access to ${user.name} profile is a success`,
+            data: {
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                isAdmin: user.isAdmin,
+            },
+        });
+    } else {
+        res.status(404)
+        throw new Error('User NOT found!')
+    }
     
-    res.status(200).json({
-        message: "get user profile success",
-        
-    });
+    
 });
 
 // @desc    Update user Profile
@@ -108,10 +122,32 @@ export const getUserProfile = asyncHandler(async (req, res) => {
 // @access  Private
 export const updateUserProfile = asyncHandler(async (req, res) => {
     
-    res.status(201).json({
-        message: "update user profile success",
-        
-    });
+    const user = await User.findById(req.user._id);
+
+    if (user) {
+        user.name = req.body.name || user.name;
+        user.email = req.body.email || user.email;
+
+        if (req.body.password) {
+            user.password=req.body.password
+        }
+
+        const updatedUser = await user.save();
+
+        res.status(201).json({
+            message: `${user.name} profile was successfully updated!`,
+            data: {
+                _id:updatedUser._id,
+                name:updatedUser.name,
+                email:updatedUser.email,
+                isAdmin:updatedUser.isAdmin,
+            }
+        })
+    } else {
+        res.status(404);
+        throw new Error("User NOT found!");
+    }
+    
 });
 
 
