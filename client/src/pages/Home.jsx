@@ -8,7 +8,7 @@ import { useGetAllProductsQuery } from "../features/productSlice";
 const Home = () => {
     const { data, isLoading, error } = useGetAllProductsQuery();
 
-    console.log(data);
+    // console.log(data);
 
     let products = data?.data;
 
