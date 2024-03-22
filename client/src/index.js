@@ -18,6 +18,7 @@ import Login from './pages/Login';
 // import "bootstrap/dist/css/bootstrap.min.css"
 import "./assets/styles/bootstrap.custom.css"
 import './assets/styles/index.css';
+import Register from './pages/Register';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -34,6 +35,8 @@ const router = createBrowserRouter(
       <Route path="/shipping" element={<Shipping />}/>
       
       <Route path="/login" element={<Login />} />
+
+      <Route path="/register" element={<Register />} />
     </Route>
   )
 )
