@@ -2,15 +2,33 @@ import {LinkContainer} from "react-router-bootstrap"
 
 import { Navbar, Nav, Container, Badge, NavDropdown } from "react-bootstrap"
 import { FaShoppingCart, FaUser } from "react-icons/fa"
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useLogoutMutation } from "../features/authApiSlice";
+import { useNavigate } from "react-router-dom";
+import { logout } from "../features/authSlice";
+import { toast } from "react-toastify";
 
 
 const Header = () => {
     const { cartItems } = useSelector(store => store.cart);
     const { userInfo } = useSelector(store => store.auth);
 
-    const logoutHandler = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const [logoutApiCall, { data, isLoading }] = useLogoutMutation();
+
+    const logoutHandler = async () => {
         console.log("logged out");
+
+        try {
+            const res = await logoutApiCall().unwrap();
+            dispatch(logout())
+
+            toast.success(res.message)
+        } catch (error) {
+            toast.error(error?.data?.message || error?.error);
+        }
     }
 
     return <header>
