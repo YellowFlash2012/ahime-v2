@@ -14,11 +14,12 @@ import SingleProduct from './pages/SingleProduct';
 import Cart from './pages/Cart';
 import Shipping from './pages/Shipping';
 import Login from './pages/Login';
+import Register from './pages/Register';
 
 // import "bootstrap/dist/css/bootstrap.min.css"
 import "./assets/styles/bootstrap.custom.css"
 import './assets/styles/index.css';
-import Register from './pages/Register';
+import PrivateRoute from './components/PrivateRoute';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -32,11 +33,16 @@ const router = createBrowserRouter(
       
       <Route path="/cart" element={<Cart />} />
       
-      <Route path="/shipping" element={<Shipping />}/>
       
       <Route path="/login" element={<Login />} />
 
       <Route path="/register" element={<Register />} />
+
+
+      <Route path='' element={<PrivateRoute />}>
+        
+      <Route path="/shipping" element={<Shipping />} />
+      </Route>
     </Route>
   )
 )
