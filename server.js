@@ -7,8 +7,7 @@ import connectDB from "./config/db.js";
 import productsRoutes from "./routes/v1/products.js";
 import { errorHandler, notFound } from "./middleware/error.js";
 import usersRoutes from "./routes/v1/users.js";
-
-
+import ordersRoutes from "./routes/v1/orders.js";
 
 config()
 
@@ -27,6 +26,7 @@ const port = process.env.PORT || 5000;
 
 // routes
 app.use("/api/v1/products", productsRoutes);
+app.use("/api/v1/orders", ordersRoutes);
 app.use("/api/v1/users", usersRoutes);
 
 app.use(notFound);
