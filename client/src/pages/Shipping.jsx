@@ -50,7 +50,7 @@ const Shipping = () => {
 
             <Form.Group controlId="country" className="my-2">
                 <Form.Label>Country</Form.Label>
-                <Form.Control type="text" placeholder="Enter your country ..." value={address} onChange={(e)=>setCountry(e.target.value)}></Form.Control>
+                <Form.Control type="text" placeholder="Enter your country ..." value={country} onChange={(e)=>setCountry(e.target.value)}></Form.Control>
             </Form.Group>
 
             <Button type="submit" variant="primary" className="my-2">
