@@ -6,11 +6,11 @@ export const ordersApiSlice = apiSlice.injectEndpoints({
             query: (data) => ({
                 url: "/api/v1/orders",
                 method: "POST",
-                body: {...data},
-                credentials:"include"
+                body: { ...data },
+                credentials: "include"
             })
         })
     })
-})
+});
 
 export const { useCreateNewOrderMutation } = ordersApiSlice;
