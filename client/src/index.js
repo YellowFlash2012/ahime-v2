@@ -20,12 +20,14 @@ import Cart from "./pages/Cart";
 import Shipping from "./pages/Shipping";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import PrivateRoute from "./components/PrivateRoute";
+import Payment from "./pages/Payment";
+import PlaceOrder from "./pages/PlaceOrder";
 
 // import "bootstrap/dist/css/bootstrap.min.css"
 import "./assets/styles/bootstrap.custom.css";
 import "./assets/styles/index.css";
-import PrivateRoute from "./components/PrivateRoute";
-import Payment from "./pages/Payment";
+
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -44,9 +46,11 @@ const router = createBrowserRouter(
             <Route path="/register" element={<Register />} />
 
             <Route path="" element={<PrivateRoute />}>
-          <Route path="/shipping" element={<Shipping />} />
-          
+                <Route path="/shipping" element={<Shipping />} />
+
                 <Route path="/payment" element={<Payment />} />
+
+                <Route path="/place-order" element={<PlaceOrder />} />
             </Route>
         </Route>
     )
