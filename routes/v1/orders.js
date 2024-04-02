@@ -9,7 +9,7 @@ router.route("/").post(protect, createNewOrder).get(protect, admin, getAllOrders
 
 router.route("/my-orders").get(protect, getMyOrders)
 
-router.route("/:id").get(protect, admin, getSingleOrder);
+router.route("/:id").get(protect, getSingleOrder);
 
 router.route("/:id/paid").put(protect, updateOrderToPaid);
 

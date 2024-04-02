@@ -9,8 +9,15 @@ export const ordersApiSlice = apiSlice.injectEndpoints({
                 body: { ...data },
                 credentials: "include"
             })
-        })
+        }),
+        getSingleOrderDetails: builder.query({
+            query: (id) => ({
+                url: `/api/v1/orders/${id}`,
+                credentials: "include"
+            }),
+            keepUnusedDataFor:7
+        }),
     })
 });
 
-export const { useCreateNewOrderMutation } = ordersApiSlice;
+export const { useCreateNewOrderMutation, useGetSingleOrderDetailsQuery } = ordersApiSlice;

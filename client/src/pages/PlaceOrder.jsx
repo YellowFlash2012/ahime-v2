@@ -36,7 +36,7 @@ const PlaceOrder = () => {
 
             dispatch(clearCartAfterPlacingOrder())
 
-            navigate(`/my-orders/${res?.data?._id}`)
+            navigate(`/orders/${res?.data?._id}`)
         } catch (error) {
             toast.error(error)
         }

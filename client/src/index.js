@@ -23,6 +23,7 @@ import Register from "./pages/Register";
 import PrivateRoute from "./components/PrivateRoute";
 import Payment from "./pages/Payment";
 import PlaceOrder from "./pages/PlaceOrder";
+import Order from "./pages/Order";
 
 // import "bootstrap/dist/css/bootstrap.min.css"
 import "./assets/styles/bootstrap.custom.css";
@@ -51,6 +52,8 @@ const router = createBrowserRouter(
                 <Route path="/payment" element={<Payment />} />
 
                 <Route path="/place-order" element={<PlaceOrder />} />
+                
+                <Route path="/orders/:id" element={<Order />} />
             </Route>
         </Route>
     )
