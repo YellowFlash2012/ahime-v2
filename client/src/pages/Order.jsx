@@ -1,17 +1,63 @@
 import { Button, Card, Col, Image, ListGroup, Row, Spinner } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
+import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
+
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-import { useGetSingleOrderDetailsQuery } from "../features/orders/ordersApiSlice";
+import { useGetPaypalClientIDQuery, useGetSingleOrderDetailsQuery, usePayOrderMutation } from "../features/orders/ordersApiSlice";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const Order = () => {
     const { id } = useParams();
 
-    const { data, refetch, isLoading, error } = useGetSingleOrderDetailsQuery(id);
+    // 660a5f84b6cd9cf891451620
+
+    const { data, refetch, isLoading, error } =
+        useGetSingleOrderDetailsQuery(id);
+
+    const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
+
+    const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
+
+    const {
+        data: paypal,
+        isLoading: paypalClientIDLoading,
+        error: paypalClientIDError,
+    } = useGetPaypalClientIDQuery();
+
+    const { userInfo } = useSelector((store) => store.auth);
 
     // console.log(data);
 
-    const payOrderHandler=(e)=>{}
+    const payOrderHandler = (e) => {};
+
+    useEffect(() => {
+        if (!paypalClientIDError && !paypalClientIDLoading && paypal.clientID) {
+            const loadPaypalScript = async () => {
+                paypalDispatch({
+                    type: "resetOptions",
+                    value: {
+                        "client-id": paypal.clientID,
+                        currency: "USD",
+                    },
+                });
+                paypalDispatch({ type: "setLoadingStatus", value: "pending" });
+            };
+
+            if (data && !data.isPaid) {
+                if (!window.paypal) {
+                    loadPaypalScript();
+                }
+            }
+        }
+    }, [
+        paypal,
+        paypalClientIDError,
+        paypalClientIDLoading,
+        data,
+        paypalDispatch,
+    ]);
 
     return (
         <>
