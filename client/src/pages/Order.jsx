@@ -7,6 +7,7 @@ import Message from "../components/Message";
 import { useGetPaypalClientIDQuery, useGetSingleOrderDetailsQuery, usePayOrderMutation } from "../features/orders/ordersApiSlice";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 const Order = () => {
     const { id } = useParams();
@@ -16,7 +17,10 @@ const Order = () => {
     const { data, refetch, isLoading, error } =
         useGetSingleOrderDetailsQuery(id);
 
-    const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
+    const [payOrder, { data: updatedOrderToPaid, isLoading: loadingPay }] 
+        = usePayOrderMutation();
+    
+    // console.log(updatedOrderToPaid);
 
     const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
 
@@ -30,7 +34,43 @@ const Order = () => {
 
     // console.log(data);
 
-    const payOrderHandler = (e) => {};
+    function createOrder(data, actions) {
+        return actions.order.create({
+            purchase_units: [
+                {
+                    amount: {
+                        value:data.totalPrice
+                    }
+                }
+            ]
+        }).then(id => { return id; })
+    }
+    
+    function onApprove(actions, data) {
+        return actions.order.capture().then(async function (details) {
+            try {
+                await payOrder({ id, details });
+
+                refetch()
+
+                toast.success(updatedOrderToPaid?.message);
+            } catch (error) {
+                toast.error(error?.data?.message || error?.message);
+            }
+        })
+    }
+
+    async function onApproveTest() {
+        await payOrder({ id, details: { payer: {} } });
+
+        refetch();
+
+        toast.success(updatedOrderToPaid?.message);
+    }
+    
+    function onError(error) {
+        toast.error(error.message);
+    }
 
     useEffect(() => {
         if (!paypalClientIDError && !paypalClientIDLoading && paypal.clientID) {
@@ -227,28 +267,33 @@ const Order = () => {
                                         )}
                                     </ListGroup.Item>
 
-                                    <ListGroup.Item>
-                                        <Button
-                                            type="button"
-                                            className="btn-block"
-                                            variant="success"
-                                            disabled={
-                                                data?.data?.length === 0 ||
-                                                isLoading
-                                            }
-                                            onClick={payOrderHandler}
-                                            size="lg"
-                                        >
-                                            {isLoading ? (
-                                                <Spinner
-                                                    animation="border"
-                                                    role="status"
-                                                />
+                                    {!data.isPaid && (
+                                        <ListGroup.Item>
+                                            {loadingPay && <Loader />}
+                                            {isPending ? (
+                                                <Loader />
                                             ) : (
-                                                "Pay Order"
+                                                <div>
+                                                    <Button
+                                                        onClick={onApproveTest}
+                                                        style={{
+                                                            marginBottom:
+                                                                "10px",
+                                                        }}
+                                                    >
+                                                        Test Pay Order
+                                                    </Button>
+                                                    <PayPalButtons
+                                                        createOrder={
+                                                            createOrder
+                                                        }
+                                                        onApprove={onApprove}
+                                                        onError={onError}
+                                                    ></PayPalButtons>
+                                                </div>
                                             )}
-                                        </Button>
-                                    </ListGroup.Item>
+                                        </ListGroup.Item>
+                                    )}
                                 </ListGroup>
                             </Card>
                         </Col>

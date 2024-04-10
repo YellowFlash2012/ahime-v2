@@ -18,7 +18,7 @@ export const ordersApiSlice = apiSlice.injectEndpoints({
             keepUnusedDataFor: 7,
         }),
         payOrder: builder.mutation({
-            query: (id, details) => ({
+            query: ({id, details}) => ({
                 url: `/api/v1/orders/${id}/paid`,
                 method: "PUT",
                 body: { ...details },
