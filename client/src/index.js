@@ -29,6 +29,7 @@ import Order from "./pages/Order";
 // import "bootstrap/dist/css/bootstrap.min.css"
 import "./assets/styles/bootstrap.custom.css";
 import "./assets/styles/index.css";
+import Profile from "./pages/Profile";
 
 
 const container = document.getElementById("root");
@@ -55,6 +56,8 @@ const router = createBrowserRouter(
                 <Route path="/place-order" element={<PlaceOrder />} />
                 
                 <Route path="/orders/:id" element={<Order />} />
+
+                <Route path="/profile" element={<Profile />} />
             </Route>
         </Route>
     )
