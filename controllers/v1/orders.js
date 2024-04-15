@@ -109,7 +109,7 @@ export const updateOrderToDeliveredByAdmin = asyncHandler(async (req, res) => {
 // @route   GET /api/v1/orders
 // @access  Private/Admin
 export const getAllOrdersByAdmin = asyncHandler(async (req, res) => {
-    const orders = await Order.find({});
+    const orders = await Order.find({}).populate("user", "id name");
 
     res.status(200).json({
         message: "Here are all the orders placed on this site ...",
