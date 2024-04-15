@@ -25,11 +25,17 @@ import PrivateRoute from "./components/PrivateRoute";
 import Payment from "./pages/Payment";
 import PlaceOrder from "./pages/PlaceOrder";
 import Order from "./pages/Order";
+import Profile from "./pages/Profile";
+
+// admin components
+import AdminRoute from "./components/admin/AdminRoute";
+import OrdersList from "./pages/admin/OrdersList";
+import ProductsList from "./pages/admin/ProductsList";
+import UsersList from "./pages/admin/UsersList";
 
 // import "bootstrap/dist/css/bootstrap.min.css"
 import "./assets/styles/bootstrap.custom.css";
 import "./assets/styles/index.css";
-import Profile from "./pages/Profile";
 
 
 const container = document.getElementById("root");
@@ -54,10 +60,16 @@ const router = createBrowserRouter(
                 <Route path="/payment" element={<Payment />} />
 
                 <Route path="/place-order" element={<PlaceOrder />} />
-                
+
                 <Route path="/orders/:id" element={<Order />} />
 
                 <Route path="/profile" element={<Profile />} />
+            </Route>
+
+            <Route path="" element={<AdminRoute />}>
+                <Route path="/admin/orders-list" element={<OrdersList />} />
+                <Route path="/admin/products-list" element={<ProductsList />} />
+                <Route path="/admin/users-list" element={<UsersList />} />
             </Route>
         </Route>
     )
