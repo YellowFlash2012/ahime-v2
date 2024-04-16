@@ -99,10 +99,25 @@ export const updateOrderToPaid = asyncHandler(async (req, res) => {
 // @route   PUT /api/v1/orders/:id/delivered
 // @access  Private/Admin
 export const updateOrderToDeliveredByAdmin = asyncHandler(async (req, res) => {
-    
-    res.status(201).json({
-        message: "One order updated to delivered",
-    });
+
+    const order = await Order.findById(req.params.id);
+    console.log(req.params.id);
+
+    if (order) {
+        order.isDelivered = true;
+
+        order.deliveredAt = Date.now();
+
+        const updatedOrder = await order.save();
+        
+        res.status(201).json({
+            message: `Order ${order._id} has been delivered`,
+            data:updatedOrder
+        });
+    } else {
+        res.status(404)
+        throw new Error("The specified order was NOT found!")
+    }
 });
 
 // @desc    Get all orders by admin
