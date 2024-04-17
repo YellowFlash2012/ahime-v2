@@ -36,6 +36,7 @@ import UsersList from "./pages/admin/UsersList";
 // import "bootstrap/dist/css/bootstrap.min.css"
 import "./assets/styles/bootstrap.custom.css";
 import "./assets/styles/index.css";
+import EditProduct from "./pages/admin/EditProduct";
 
 
 const container = document.getElementById("root");
@@ -70,6 +71,7 @@ const router = createBrowserRouter(
                 <Route path="/admin/orders-list" element={<OrdersList />} />
                 <Route path="/admin/products-list" element={<ProductsList />} />
                 <Route path="/admin/users-list" element={<UsersList />} />
+                <Route path="/admin/products/:id/edit" element={<EditProduct />} />
             </Route>
         </Route>
     )

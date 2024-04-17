@@ -1,6 +1,7 @@
 import { Button, Col, Row, Spinner, Table } from "react-bootstrap";
 import { FaTimes, FaEdit,FaTrash } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import Loader from "../../components/Loader";
@@ -9,6 +10,8 @@ import Message from "../../components/Message";
 import { useAddNewProductMutation, useGetAllProductsQuery } from "../../features/productSlice";
 
 const ProductsList = () => {
+    const navigate = useNavigate();
+
     const {
         data: products,
         isLoading,
@@ -100,6 +103,7 @@ const ProductsList = () => {
                                             <Button
                                                 variant="light"
                                                 className="btn-sm mx-2"
+                                                
                                             >
                                                 <FaEdit />
                                             </Button>

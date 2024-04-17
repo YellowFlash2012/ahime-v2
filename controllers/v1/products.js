@@ -25,7 +25,7 @@ export const getOneProduct = asyncHandler(async (req, res) => {
             data: product,
         });
 
-        return;
+    
     } else {
         res.status(404);
 
@@ -57,4 +57,37 @@ export const addNewProduct = asyncHandler(async (req, res) => {
 
         data: createdPdt,
     });
+})
+
+// @desc    Edit/Update one product
+// @route   PUT /api/v1/products/:id
+// @access  Private/Admin
+export const editProductByAdmin = asyncHandler(async (req, res) => {
+
+    const { name, price, description, image, brand, category, countInStock } = req.body;
+    
+    const product = await Product.findById(req.params.id);
+
+    if (product) {
+        product.name = name;
+        product.price = price;
+        product.description = description;
+        product.image = image;
+        product.brand = brand;
+        product.category = category;
+        product.countInStock = countInStock;
+
+        const updatedProduct = await product.save();
+
+        res.status(201).json({
+            success:true,
+            message: `${product.name} was successfully updated`,
+            data: updatedProduct,
+        });
+
+    } else {
+        res.status(404);
+
+        throw new Error("Product NOT found!");
+    }
 })
