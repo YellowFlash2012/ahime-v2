@@ -101,6 +101,7 @@ const Profile = () => {
                     </Form.Group>
 
                     <Button
+                        style={{ width: "100%" }}
                         type="submit"
                         className="btn-block my-2"
                         variant="primary"
@@ -153,7 +154,7 @@ const Profile = () => {
                                             <FaTimes style={{ color: "red" }} />
                                         )}
                                     </td>
-                                    
+
                                     <td>
                                         {order.isDelivered ? (
                                             order.deliveredAt.substring(0, 10)
@@ -163,8 +164,15 @@ const Profile = () => {
                                     </td>
 
                                     <td>
-                                        <LinkContainer to={`/orders/${order._id}`}>
-                                        <Button className="btn-sm" variant="light">Details</Button>
+                                        <LinkContainer
+                                            to={`/orders/${order._id}`}
+                                        >
+                                            <Button
+                                                className="btn-sm"
+                                                variant="light"
+                                            >
+                                                Details
+                                            </Button>
                                         </LinkContainer>
                                     </td>
                                 </tr>

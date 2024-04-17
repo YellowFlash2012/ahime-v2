@@ -70,7 +70,7 @@ const Register = () => {
                         onChange={(e) => setName(e.target.value)}
                     />
                 </Form.Group>
-                
+
                 <Form.Group controlId="email" className="my-3">
                     <Form.Label>Your email address</Form.Label>
 
@@ -92,7 +92,7 @@ const Register = () => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </Form.Group>
-                
+
                 <Form.Group controlId="cpassword" className="my-3">
                     <Form.Label>Confirm your password</Form.Label>
 
@@ -110,6 +110,7 @@ const Register = () => {
                     size="lg"
                     className="mt-2"
                     disabled={isLoading}
+                    style={{ width: "100%" }}
                 >
                     {isLoading ? (
                         <Spinner animation="border" role="status" />
@@ -123,11 +124,7 @@ const Register = () => {
                 <Col>
                     Already a customer?{" "}
                     <Link
-                        to={
-                            redirect
-                                ? `/login?redirect=${redirect}`
-                                : "/login"
-                        }
+                        to={redirect ? `/login?redirect=${redirect}` : "/login"}
                     >
                         Log into your account
                     </Link>

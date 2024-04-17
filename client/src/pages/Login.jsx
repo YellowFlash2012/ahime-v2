@@ -78,7 +78,7 @@ const Login = () => {
                 </Form.Group>
 
             
-                <Button type="submit" variant="primary" size="lg" className="mt-2" disabled={isLoading}>
+                <Button type="submit" variant="primary" size="lg" className="mt-2" disabled={isLoading} style={{width:"100%"}}>
                     {isLoading ? <Spinner animation="border" role="status" /> : "Log in"}
                 </Button>
             

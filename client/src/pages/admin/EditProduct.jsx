@@ -43,10 +43,14 @@ const EditProduct = () => {
 
         const res = await updateProduct(newProductData);
 
+        console.log(res);
+
         if (res?.error) {
             toast.error(res?.error)
         } else {
             toast.success(res?.data?.message)
+
+            refetch()
 
             navigate("/admin/products-list")
         }

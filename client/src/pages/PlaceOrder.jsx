@@ -163,34 +163,29 @@ const PlaceOrder = () => {
                                 </Row>
                             </ListGroup.Item>
 
-                            <ListGroup.Item>
-                                {error && (
-                                    <Message variant="danger">{error}</Message>
-                                )}
-                            </ListGroup.Item>
+                            
 
                             <ListGroup.Item>
-                        
-
                                 <Button
+                                    style={{ width: "100%" }}
                                     type="button"
                                     className="btn-block"
                                     variant="success"
-                                    disabled={cartItems.length === 0 || isLoading}
-                                        onClick={placeOrderHandler}
+                                    disabled={
+                                        cartItems.length === 0 || isLoading
+                                    }
+                                    onClick={placeOrderHandler}
                                     size="lg"
-                                    
                                 >
                                     {isLoading ? (
                                         <Spinner
-                                        animation="border"
+                                            animation="border"
                                             role="status"
                                         />
                                     ) : (
                                         "Place Order"
                                     )}
                                 </Button>
-        
                             </ListGroup.Item>
                         </ListGroup>
                     </Card>

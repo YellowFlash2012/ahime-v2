@@ -70,11 +70,11 @@ const Order = () => {
     }
 
     async function onApproveTest() {
-        await payOrder({ id, details: { payer: {} } });
+        const res = await payOrder({ id, details: { payer: {} } });
 
         refetch();
 
-        toast.success(updatedOrderToPaid?.message);
+        toast.success(res?.data?.message);
     }
     
     function onError(error) {
@@ -84,11 +84,11 @@ const Order = () => {
     const deliverOrderHandler = async () => {
         try {
     
-            await deliverOrder(id)
+            const res = await deliverOrder(id);
 
             refetch()
 
-            toast.success(updatedOrderToDelivered?.message);
+            toast.success(res?.data?.message);
         } catch (error) {
             toast.error(error?.data?.message || error.message)
         }
@@ -293,6 +293,7 @@ const Order = () => {
                                                         style={{
                                                             marginBottom:
                                                                 "10px",
+                                                            width:"100%"
                                                         }}
                                                     >
                                                         Test Pay Order
@@ -315,11 +316,13 @@ const Order = () => {
                                         !data?.data?.isDelivered && (
                                             <ListGroup.Item>
                                                 <Button
+                                                style={{width:"100%"}}
                                                     type="button"
                                                     className="btn btn-block"
                                                     onClick={
                                                         deliverOrderHandler
                                                     }
+                                                
                                                 >
                                                     {loadingDeliver ? (
                                                         <Spinner

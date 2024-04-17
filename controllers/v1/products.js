@@ -68,6 +68,9 @@ export const editProductByAdmin = asyncHandler(async (req, res) => {
     
     const product = await Product.findById(req.params.id);
 
+    // console.log(req.params.id);
+    // console.log(product);
+
     if (product) {
         product.name = name;
         product.price = price;
