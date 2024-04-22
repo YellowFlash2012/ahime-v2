@@ -1,3 +1,5 @@
+import path from "path"
+
 import express from "express"
 import { config } from "dotenv"
 import cookieParser from "cookie-parser";
@@ -8,6 +10,7 @@ import productsRoutes from "./routes/v1/products.js";
 import { errorHandler, notFound } from "./middleware/error.js";
 import usersRoutes from "./routes/v1/users.js";
 import ordersRoutes from "./routes/v1/orders.js";
+import uploadsRoutes from "./routes/v1/uploads/uploads.js";
 
 config()
 
@@ -28,10 +31,16 @@ const port = process.env.PORT || 5000;
 app.use("/api/v1/products", productsRoutes);
 app.use("/api/v1/orders", ordersRoutes);
 app.use("/api/v1/users", usersRoutes);
+app.use("/api/v1/uploads", uploadsRoutes)
+
 
 app.get("/api/config/paypal", (req, res) => {
     res.send({ clientID: process.env.PAYPAL_CLIENT_ID });
 })
+
+// make uploads folder static
+const __dirname = path.resolve();
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
 app.use(notFound);
 app.use(errorHandler)
