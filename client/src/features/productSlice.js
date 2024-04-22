@@ -37,7 +37,16 @@ export const productsSlice = apiSlice.injectEndpoints({
             invalidatesTags: ["Products"],
             
         }),
+        uploadProductImage: builder.mutation({
+            query: (data) => ({
+                url: "/api/v1/uploads",
+                method: "POST",
+                body:data,
+                credentials:"include"
+            }),
+            
+        }),
     })
 })
 
-export const { useGetAllProductsQuery,useGetOneProductQuery,useAddNewProductMutation, useUpdateProductMutation } = productsSlice;
+export const { useGetAllProductsQuery,useGetOneProductQuery,useAddNewProductMutation, useUpdateProductMutation, useUploadProductImageMutation } = productsSlice;
