@@ -101,7 +101,7 @@ export const updateOrderToPaid = asyncHandler(async (req, res) => {
 export const updateOrderToDeliveredByAdmin = asyncHandler(async (req, res) => {
 
     const order = await Order.findById(req.params.id);
-    console.log(req.params.id);
+    // console.log(req.params.id);
 
     if (order) {
         order.isDelivered = true;

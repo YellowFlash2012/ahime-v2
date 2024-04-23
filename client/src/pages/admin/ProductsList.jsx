@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
 
-import { useAddNewProductMutation, useGetAllProductsQuery } from "../../features/productSlice";
+import { useAddNewProductMutation, useDeleteProductMutation, useGetAllProductsQuery } from "../../features/productSlice";
 
 const ProductsList = () => {
     const navigate = useNavigate();
@@ -21,7 +21,9 @@ const ProductsList = () => {
 
     // console.log(products);
 
-    const [addNewProduct, {isLoading: addNewPdtLoading }] = useAddNewProductMutation();
+    const [addNewProduct, { isLoading: addNewPdtLoading }] = useAddNewProductMutation();
+    
+    const [deleteProduct, {isLoading:loadingDelete}] = useDeleteProductMutation();
     
     const addNewPdtHandler = async () => {
         if (window.confirm("You are about to add a new product, continue?")) {
@@ -39,7 +41,19 @@ const ProductsList = () => {
     }
 
     const deleteProductHandler = async (id) => {
-        console.log(id);
+        // console.log(id);
+
+        if (window.confirm("You are about to delete this product, are you sure?")) {
+            try {
+                const res = await deleteProduct(id);
+                console.log(res);
+                refetch()
+
+                toast.success(res?.message)
+            } catch (error) {
+                toast.error(error?.data?.message || error?.message);
+            }
+        }
     }
 
     return (
@@ -62,7 +76,7 @@ const ProductsList = () => {
                 </Col>
             </Row>
 
-            {isLoading ? (
+            {isLoading || loadingDelete ? (
                 <Loader />
             ) : error ? (
                 <Message variant="danger">{error}</Message>
@@ -103,7 +117,6 @@ const ProductsList = () => {
                                             <Button
                                                 variant="light"
                                                 className="btn-sm mx-2"
-                                                
                                             >
                                                 <FaEdit />
                                             </Button>
@@ -118,9 +131,11 @@ const ProductsList = () => {
                                                 )
                                             }
                                         >
-                                            <FaTrash
-                                                style={{ color: "white" }}
-                                            />
+                                            
+                                                <FaTrash
+                                                    style={{ color: "white" }}
+                                                />
+                                        
                                         </Button>
                                     </td>
                                 </tr>
