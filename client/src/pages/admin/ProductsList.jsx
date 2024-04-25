@@ -1,5 +1,5 @@
 import { Button, Col, Row, Spinner, Table } from "react-bootstrap";
-import { FaTimes, FaEdit,FaTrash } from "react-icons/fa";
+import { FaEdit,FaTrash } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";

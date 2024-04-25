@@ -159,7 +159,9 @@ export const getAllUsersByAdmin = asyncHandler(async (req, res) => {
     const users = await User.find({});
 
     res.status(200).json({
-        message: "get all users success",
+        success: true,
+        count:users.length,
+        message: "Here are all the users registered on your site",
         data:users
         
     });
@@ -169,31 +171,67 @@ export const getAllUsersByAdmin = asyncHandler(async (req, res) => {
 // @route   GET /api/v1/users/:id
 // @access  Private/Admin
 export const getOneUserByAdmin = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id).select("-password");
+
+    if (user) {
+        res.status(200).json({
+            success:true,
+            message: "Here is the user you requested",
+            data:user
+        });
+    } else {
+        res.status(404)
+        throw new Error("Sorry, user NOT found")
+    }
     
-    res.status(200).json({
-        message: "get one user success",
-        
-    });
 });
 
 // @desc    Update a single user
 // @route   PUT /api/v1/users/:id
 // @access  Private/Admin
 export const updateOneUserByAdmin = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);
+
+    if (user) {
+        user.name = req.body.name || user.name;
+        user.email = req.body.email || user.email;
+        user.isAdmin = Boolean(req.body.isAdmin)
+
+        const updatedUser = await user.save();
+
+        res.status(201).json({
+            success:true,
+            message: `User ${user._id} details updated!`,
+            data:updatedUser
+        });
+    } else {
+        res.status(404);
+        throw new Error("Sorry, user NOT found");
+    }
     
-    res.status(201).json({
-        message: "update one user success",
-        
-    });
 });
 
 // @desc    DELETE user Profile
 // @route   DELETE /api/v1/users/:id
 // @access  Private/Admin
 export const deleteUserByAdmin = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);
+
+    if (user) {
+        if (user.isAdmin) {
+            res.status(400)
+            throw new Error("Sorry, but you can't delete admin")
+        }
+
+        await user.deleteOne({ _id: user._id });
+
+        res.status(200).json({
+            success: true,
+            message:`${user.name} deleted successfully!`
+        })
+    } else {
+        res.status(404);
+        throw new Error("Sorry, user NOT found");
+    }
     
-    res.status(200).json({
-        message: "delete one user success",
-        
-    });
 });
