@@ -48,8 +48,15 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 credentials:"include"
             }),
         }),
+        deleteOneUser: builder.mutation({
+            query: (id) => ({
+                url: `/api/v1/users/${id}`,
+                method:"DELETE",
+                credentials:"include"
+            }),
+        }),
         
     }),
 });
 
-export const { useLoginMutation, useLogoutMutation, useRegisterMutation,useProfileMutation,useGetAllUsersQuery,useGetOneUserQuery } = authApiSlice;
+export const { useLoginMutation, useLogoutMutation, useRegisterMutation,useProfileMutation,useGetAllUsersQuery,useGetOneUserQuery, useDeleteOneUserMutation } = authApiSlice;

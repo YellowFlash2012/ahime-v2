@@ -12,6 +12,6 @@ router.post("/logout",protect, logoutUser)
 
 router.route("/profile").get(protect, getUserProfile).put(protect, updateUserProfile)
 
-router.route(":id").delete(protect, admin, deleteUserByAdmin).put(protect, admin, updateOneUserByAdmin).get(protect, admin, getOneUserByAdmin)
+router.route("/:id").delete(protect, admin, deleteUserByAdmin).put(protect, admin, updateOneUserByAdmin).get(protect, admin, getOneUserByAdmin)
 
 export default router;

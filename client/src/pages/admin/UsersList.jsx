@@ -1,4 +1,4 @@
-import { Button, Col, Row, Spinner, Table } from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
 import { FaEdit, FaTrash, FaTimes, FaCheck } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -6,22 +6,40 @@ import { toast } from "react-toastify";
 
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
-import { useGetAllUsersQuery } from "../../features/authApiSlice";
+import { useDeleteOneUserMutation, useGetAllUsersQuery } from "../../features/authApiSlice";
 
 const UsersList = () => {
     const { data, isLoading, refetch, error } = useGetAllUsersQuery();
 
+    const [deleteOneUser, { isLoading: loadingDelete }] =
+        useDeleteOneUserMutation();
+
     // console.log(data);
 
     const deleteUserHandler = async (id) => {
-        console.log(id);
+        // console.log(id);
+
+        if (window.confirm("You are about to delete this user, are you sure?")) {
+            try {
+            
+                const res = await deleteOneUser(id).unwrap();
+
+                // console.log(res);
+
+                refetch()
+
+                toast.success(res?.message)
+            } catch (error) {
+                toast.error(error?.data?.message || error?.message);
+            }
+        }
     }
 
     return (
         <>
             <h1>{data?.count} Users</h1>
 
-            {isLoading ? (
+            {isLoading || loadingDelete ? (
                 <Loader />
             ) : error ? (
                 <Message variant="danger">{error}</Message>
