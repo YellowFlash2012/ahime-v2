@@ -215,7 +215,7 @@ export const updateOneUserByAdmin = asyncHandler(async (req, res) => {
 // @route   DELETE /api/v1/users/:id
 // @access  Private/Admin
 export const deleteUserByAdmin = asyncHandler(async (req, res) => {
-    console.log(req.params.id);
+    // console.log(req.params.id);
     const user = await User.findById(req.params.id);
 
     if (user) {

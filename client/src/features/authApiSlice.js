@@ -7,7 +7,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 url: "/api/v1/users/login",
                 method: "POST",
                 body: data,
-                credentials:"include"
+                credentials: "include",
             }),
         }),
         register: builder.mutation({
@@ -15,48 +15,59 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 url: "/api/v1/users",
                 method: "POST",
                 body: data,
-                credentials:"include"
+                credentials: "include",
             }),
         }),
         logout: builder.mutation({
             query: () => ({
                 url: "/api/v1/users/logout",
                 method: "POST",
-                credentials:"include"
+                credentials: "include",
             }),
         }),
         profile: builder.mutation({
             query: (data) => ({
                 url: "/api/v1/users/profile",
                 method: "PUT",
-                credentials:"include"
+                credentials: "include",
             }),
         }),
         getAllUsers: builder.query({
             query: () => ({
                 url: "/api/v1/users",
-        
-                credentials:"include"
+
+                credentials: "include",
             }),
             providesTags: ["Users"],
-            keepUnusedDataFor:7
+            keepUnusedDataFor: 7,
         }),
+
+        // ***admin section
         getOneUser: builder.query({
             query: (id) => ({
                 url: `/api/v1/users/${id}`,
-        
-                credentials:"include"
+
+                credentials: "include",
             }),
+            keepUnusedDataFor: 7,
         }),
         deleteOneUser: builder.mutation({
             query: (id) => ({
                 url: `/api/v1/users/${id}`,
-                method:"DELETE",
-                credentials:"include"
+                method: "DELETE",
+                credentials: "include",
             }),
         }),
-        
+        updateOneUser: builder.mutation({
+            query: ({id,data}) => ({
+                url: `/api/v1/users/${id}`,
+                method: "PUT",
+                body:data,
+                credentials: "include",
+            }),
+            invalidatesTags:["Users"]
+        }),
     }),
 });
 
-export const { useLoginMutation, useLogoutMutation, useRegisterMutation,useProfileMutation,useGetAllUsersQuery,useGetOneUserQuery, useDeleteOneUserMutation } = authApiSlice;
+export const { useLoginMutation, useLogoutMutation, useRegisterMutation,useProfileMutation,useGetAllUsersQuery,useGetOneUserQuery, useDeleteOneUserMutation, useUpdateOneUserMutation } = authApiSlice;

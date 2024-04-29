@@ -37,6 +37,7 @@ import UsersList from "./pages/admin/UsersList";
 import "./assets/styles/bootstrap.custom.css";
 import "./assets/styles/index.css";
 import EditProduct from "./pages/admin/EditProduct";
+import EditUser from "./pages/admin/EditUser";
 
 
 const container = document.getElementById("root");
@@ -72,6 +73,7 @@ const router = createBrowserRouter(
                 <Route path="/admin/products-list" element={<ProductsList />} />
                 <Route path="/admin/users-list" element={<UsersList />} />
                 <Route path="/admin/products/:id/edit" element={<EditProduct />} />
+                <Route path="/admin/users/:id/edit" element={<EditUser />} />
             </Route>
         </Route>
     )
