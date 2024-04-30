@@ -4,6 +4,7 @@ import Message from "../components/Message";
 import Products from "../components/Products";
 import { useGetAllProductsQuery } from "../features/productSlice";
 import { useParams } from "react-router-dom";
+import Paginate from "../components/Paginate";
 // import products from "../products";
 
 const Home = () => {
@@ -33,7 +34,9 @@ const Home = () => {
                                 <Products product={product} />
                             </Col>
                         ))}
-                    </Row>
+                            </Row>
+                            
+                            <Paginate pages={data?.data?.pages} page={data?.data?.page} />
                 </>
             )}
         </>

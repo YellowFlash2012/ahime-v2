@@ -1,23 +1,25 @@
 import { Button, Col, Row, Spinner, Table } from "react-bootstrap";
 import { FaEdit,FaTrash } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
 
 import { useAddNewProductMutation, useDeleteProductMutation, useGetAllProductsQuery } from "../../features/productSlice";
+import Paginate from "../../components/Paginate";
 
 const ProductsList = () => {
+    const { pageNumber } = useParams();
     const navigate = useNavigate();
 
     const {
-        data: products,
+        data,
         isLoading,
         error,
         refetch,
-    } = useGetAllProductsQuery();
+    } = useGetAllProductsQuery({pageNumber});
 
     // console.log(products);
 
@@ -60,7 +62,7 @@ const ProductsList = () => {
         <>
             <Row className="align-items-center">
                 <Col>
-                    <h1>{products?.count} Products</h1>
+                    <h1>{data?.count} Products</h1>
                 </Col>
 
                 <Col className="text-end">
@@ -101,7 +103,7 @@ const ProductsList = () => {
                         </thead>
 
                         <tbody>
-                            {products?.data?.map((product) => (
+                            {data?.data?.products.map((product) => (
                                 <tr key={product._id}>
                                     <td>{product._id}</td>
                                     <td>{product.name}</td>
@@ -142,8 +144,9 @@ const ProductsList = () => {
                             ))}
                         </tbody>
                     </Table>
-                </>
+                        </>
             )}
+            <Paginate pages={data?.data?.pages} page={data?.data?.page} isAdmin={true} />
         </>
     );
 };
