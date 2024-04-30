@@ -47,6 +47,9 @@ const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="/" element={<App />}>
             <Route index={true} path="/" element={<Home />} />
+            
+            {/* pagination route */}
+            <Route path="/pages/:pageNumber" element={<Home />} />
 
             <Route path="/products/:id" element={<SingleProduct />} />
 

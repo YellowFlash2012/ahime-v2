@@ -3,14 +3,17 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import Products from "../components/Products";
 import { useGetAllProductsQuery } from "../features/productSlice";
+import { useParams } from "react-router-dom";
 // import products from "../products";
 
 const Home = () => {
-    const { data, isLoading, error } = useGetAllProductsQuery();
+    const { pageNumber } = useParams();
+
+    const { data, isLoading, error } = useGetAllProductsQuery({pageNumber});
 
     // console.log(data);
 
-    let products = data?.data;
+    let products = data?.data?.products;
 
     return (
         <>

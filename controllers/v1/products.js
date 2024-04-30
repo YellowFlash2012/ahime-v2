@@ -5,11 +5,16 @@ import Product from "../../models/Product.js";
 // @route   GET /api/v1/products
 // @access  Public
 export const getAllProducts = asyncHandler(async (req, res) => {
-    const products = await Product.find({});
+    const pageSize = 2;
+    const page = Number(req.query.pageNumber) || 1;
+    const count = await Product.countDocuments();
+
+    const products = await Product.find({}).limit(pageSize).skip(pageSize * (page - 1));
+    
     res.status(200).json({
         message: "success",
         count: products.length,
-        data: products,
+        data: {products, page, pages:Math.ceil(count/pageSize)},
     });
 })
 
