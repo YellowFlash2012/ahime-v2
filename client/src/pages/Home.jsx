@@ -8,9 +8,11 @@ import Paginate from "../components/Paginate";
 // import products from "../products";
 
 const Home = () => {
-    const { pageNumber } = useParams();
+    const { keyword, pageNumber } = useParams();
 
-    const { data, isLoading, error } = useGetAllProductsQuery({pageNumber});
+    const { data, isLoading, error } = useGetAllProductsQuery({
+        keyword, pageNumber,
+    });
 
     // console.log(data);
 
@@ -36,7 +38,7 @@ const Home = () => {
                         ))}
                             </Row>
                             
-                            <Paginate pages={data?.data?.pages} page={data?.data?.page} />
+                            <Paginate pages={data?.data?.pages} page={data?.data?.page} keyword={keyword ? keyword : ""} />
                 </>
             )}
         </>
