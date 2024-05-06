@@ -168,3 +168,17 @@ export const deleteProductByAdmin = asyncHandler(async (req, res) => {
         throw new Error("Product NOT found!");
     }
 })
+
+// @desc    Fetch top rated products
+// @route   GET /api/v1/products/top
+// @access  Public
+export const getTopRatedProducts = asyncHandler(async (req, res) => {
+
+    const products = await Product.find({}).sort({rating:-1}).limit(3);
+    
+    res.status(200).json({
+        message: "success",
+        count: products.length,
+        data: products,
+    });
+})

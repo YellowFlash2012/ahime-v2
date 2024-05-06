@@ -1,11 +1,13 @@
 import express from "express";
-import { addAReview, addNewProduct, deleteProductByAdmin, editProductByAdmin, getAllProducts, getOneProduct } from "../../controllers/v1/products.js";
+import { addAReview, addNewProduct, deleteProductByAdmin, editProductByAdmin, getAllProducts, getOneProduct, getTopRatedProducts } from "../../controllers/v1/products.js";
 import { admin, protect } from "../../middleware/auth.js";
 
 
 const router = express.Router();
 
 router.route("/").get(getAllProducts).post(protect, admin, addNewProduct)
+
+router.route("/top").get(getTopRatedProducts)
 
 router
     .route("/:id")

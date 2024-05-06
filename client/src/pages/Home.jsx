@@ -5,6 +5,7 @@ import Products from "../components/Products";
 import { useGetAllProductsQuery } from "../features/productSlice";
 import { Link, useParams } from "react-router-dom";
 import Paginate from "../components/Paginate";
+import ProductsCarousel from "../components/ProductsCarousel";
 // import products from "../products";
 
 const Home = () => {
@@ -20,8 +21,8 @@ const Home = () => {
 
     return (
         <>
-            {keyword && <Link to="/" className="btn btn-light mb-4">Go Back</Link>}
-            
+            {!keyword ? <ProductsCarousel className="h-25" /> : <Link to="/" className="btn btn-light mb-4">Go Back</Link>}
+
             {isLoading ? (
                 <Loader/>
             ) : error ? (
