@@ -3,6 +3,7 @@ import path from "path"
 import express from "express"
 import { config } from "dotenv"
 import cookieParser from "cookie-parser";
+import cors from "cors"
 
 import connectDB from "./config/db.js";
 
@@ -21,6 +22,8 @@ const app = express();
 // body parser middleware
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
+
+app.use(cors())
 
 // cookie-parser middleware
 app.use(cookieParser())
