@@ -3,11 +3,13 @@ import { Button, Card, Col, Form, FormGroup, Image, ListGroup, Row, Spinner} fro
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import Rating from "../components/Rating";
 import { addToCart } from "../features/cartSlice";
 import { useAddAReviewMutation, useGetOneProductQuery } from "../features/productSlice";
+import Meta from "../components/Meta";
 
 
 const SingleProduct = () => {
@@ -78,7 +80,8 @@ const SingleProduct = () => {
                     </Message>
                 </Row>
             ) : (
-                <>
+                        <>
+                            <Meta title={product.name} />
                     <Row>
                         <Col md={5}>
                             <Image
