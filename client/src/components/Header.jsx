@@ -15,9 +15,9 @@ const Header = () => {
     const { userInfo } = useSelector(store => store.auth);
 
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    
 
-    const [logoutApiCall, { data, isLoading }] = useLogoutMutation();
+    const [logoutApiCall] = useLogoutMutation();
 
     const logoutHandler = async () => {
         console.log("logged out");

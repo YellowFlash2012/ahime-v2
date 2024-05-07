@@ -1,4 +1,4 @@
-import { Carousel, Col, Image } from "react-bootstrap";
+import { Carousel,Image } from "react-bootstrap";
 import { useGetTopRatedProductsQuery } from "../features/productSlice";
 import Loader from "./Loader";
 import Message from "./Message";

@@ -44,6 +44,7 @@ app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
 // *** config for deploying to render
 if (process.env.NODE_ENV === "production") {
+    // const __dirname = path.resolve();
     // set static folder
     app.use(express.static(path.join(__dirname, "/client/build")));
 
@@ -54,7 +55,7 @@ if (process.env.NODE_ENV === "production") {
     
 } else {
     app.get("/", (req, res) => {
-        res.sendFile("API is running")
+        res.send("API is running")
     })
 }
 
