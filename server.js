@@ -42,6 +42,22 @@ app.get("/api/config/paypal", (req, res) => {
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
+// *** config for deploying to render
+if (process.env.NODE_ENV === "production") {
+    // set static folder
+    app.use(express.static(path.join(__dirname, "/client/build")));
+
+    // any route that is NOT API will be redirected to index.html
+    app.get("*", (req, res) => {
+        res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+    });
+    
+} else {
+    app.get("/", (req, res) => {
+        res.sendFile("API is running")
+    })
+}
+
 app.use(notFound);
 app.use(errorHandler)
 
