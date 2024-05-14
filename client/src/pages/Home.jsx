@@ -15,7 +15,9 @@ const Home = () => {
         keyword, pageNumber,
     });
 
-    // console.log(data);
+    console.log(data);
+
+    console.log(error);
 
     let products = data?.data?.products;
 

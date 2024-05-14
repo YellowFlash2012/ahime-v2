@@ -81,7 +81,7 @@ const ProductsList = () => {
             {isLoading || loadingDelete ? (
                 <Loader />
             ) : error ? (
-                <Message variant="danger">{error}</Message>
+                <Message variant="danger">{error.data.message}</Message>
             ) : (
                 <>
                     <Table
@@ -133,20 +133,22 @@ const ProductsList = () => {
                                                 )
                                             }
                                         >
-                                            
-                                                <FaTrash
-                                                    style={{ color: "white" }}
-                                                />
-                                        
+                                            <FaTrash
+                                                style={{ color: "white" }}
+                                            />
                                         </Button>
                                     </td>
                                 </tr>
                             ))}
                         </tbody>
                     </Table>
-                        </>
+                </>
             )}
-            <Paginate pages={data?.data?.pages} page={data?.data?.page} isAdmin={true} />
+            <Paginate
+                pages={data?.data?.pages}
+                page={data?.data?.page}
+                isAdmin={true}
+            />
         </>
     );
 };

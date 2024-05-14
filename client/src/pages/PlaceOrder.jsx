@@ -3,6 +3,7 @@ import { Button, Card, Col, Image, ListGroup, Row, Spinner } from "react-bootstr
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+
 import CheckoutSteps from "../components/CheckoutSteps";
 import Message from "../components/Message";
 import { clearCartAfterPlacingOrder } from "../features/cartSlice";
@@ -163,7 +164,13 @@ const PlaceOrder = () => {
                                 </Row>
                             </ListGroup.Item>
 
-                            
+                            <ListGroup.Item>
+                                {error && (
+                                    <Message variant="danger">
+                                        {error.data.message}
+                                    </Message>
+                                )}
+                            </ListGroup.Item>
 
                             <ListGroup.Item>
                                 <Button
