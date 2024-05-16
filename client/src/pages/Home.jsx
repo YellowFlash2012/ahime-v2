@@ -23,7 +23,7 @@ const Home = () => {
 
     return (
         <>
-            {!keyword ? <ProductsCarousel className="h-25" /> : <Link to="/" className="btn btn-light mb-4">Go Back</Link>}
+            {/* {!keyword ? <ProductsCarousel className="h-25" /> : <Link to="/" className="btn btn-light mb-4">Go Back</Link>} */}
 
             {isLoading ? (
                 <Loader/>
