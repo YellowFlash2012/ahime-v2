@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { logout } from "../features/authSlice";
 import { toast } from "react-toastify";
 import SearchBox from "./SearchBox";
+import { resetCart } from "../features/cartSlice";
 
 
 const Header = () => {
@@ -15,6 +16,7 @@ const Header = () => {
     const { userInfo } = useSelector(store => store.auth);
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     
 
     const [logoutApiCall] = useLogoutMutation();
@@ -25,6 +27,10 @@ const Header = () => {
         try {
             const res = await logoutApiCall().unwrap();
             dispatch(logout())
+
+            dispatch(resetCart())
+
+            navigate("/login")
 
             toast.success(res.message)
         } catch (error) {

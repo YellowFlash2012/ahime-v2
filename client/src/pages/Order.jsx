@@ -19,7 +19,7 @@ const Order = () => {
     
     // console.log(data?.data.isPaid);
 
-    const [payOrder, { data: updatedOrderToPaid, isLoading: loadingPay }] 
+    const [payOrder, { isLoading: loadingPay }] 
         = usePayOrderMutation();
     
     // console.log(updatedOrderToPaid);
@@ -58,11 +58,11 @@ const Order = () => {
     function onApprove(actions, data) {
         return actions.order.capture().then(async function (details) {
             try {
-                await payOrder({ id, details });
+                const res = await payOrder({ id, details }).unwrap();
 
                 refetch()
 
-                toast.success(updatedOrderToPaid?.message);
+                toast.success(res?.message);
             } catch (error) {
                 toast.error(error?.data?.message || error?.message);
             }
